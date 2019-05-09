@@ -1,0 +1,21 @@
+# 1) variables for compilers
+CC = gcc
+CXX = g++
+CXXFLAGS =  -Wall -fpermissive -Wpointer-arith -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -O2 -fpic -DFRONTEND -D_GNU_SOURCE -std=gnu++11
+#ifdef NAVI_DEBUG
+CXXFLAGS += -g
+#endif
+
+#LDLIBS = -lboost_regex -lboost_system -lboost_filesystem -lxml2
+
+
+# 2) variables for copying files
+CP = cp
+
+# 3) viarbales for directories and files
+#ifdef NAVI_DEBUG
+#TARGETDIR = debug
+#else
+TARGETDIR = standard
+#endif
+APP_EXE = navi

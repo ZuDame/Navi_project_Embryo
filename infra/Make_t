@@ -1,0 +1,79 @@
+# make subdirectories recursively 
+define make_subdir 
+    for subdir in $(SUBDIRS) ; do		\
+	(cd $$subdir && make $1 && cd ..)	\
+    done;					
+endef
+
+
+# The set of object names for the set of source files 
+OBJS = $(addprefix $(TARGETDIR)/, $(addsuffix .o, $(basename $(SOURCES))))
+RELEASES += $(addprefix $(RELDIR)/, $(RELS))
+
+
+default		:
+
+objects		:   
+	$(call make_subdir, objects)
+	make $(OBJS)				
+
+release		:   
+	$(call make_subdir, release)
+	make $(RELEASES)
+    
+clean		:   
+	$(call make_subdir, clean)
+	rm -rf $(TARGETDIR)
+
+# implicit rules to generate .o files 
+$(TARGETDIR)/%.o	:	%.cc 
+	@if test ! -d $(TARGETDIR);	\
+	then				\
+	    mkdir $(TARGETDIR);		\
+	fi
+	$(CXX) $(INCLUDES) -c $(CXXFLAGS) $< -o $@
+
+# implicit rules to copy .doc files
+$(TARGETDIR)/%.docx	:	%.docx
+	@if test ! -d $(TARGETDIR);	\
+	then				\
+	    mkdir $(TARGETDIR);		\
+	fi
+	$(CP) $< $@
+
+$(RELDIR)/%.docx	:	%.docx
+	@if test ! -d $(RELDIR);	\
+	then				\
+	    mkdir $(RELDIR);		\
+	fi
+	$(CP) $< $@
+
+# implicit rules to copy .pdf files
+$(TARGETDIR)/%.pdf	:	%.pdf
+	@if test ! -d $(TARGETDIR);	\
+	then				\
+	    mkdir $(TARGETDIR);		\
+	fi
+	$(CP) $< $@
+
+$(RELDIR)/%.pdf	:	%.pdf
+	@if test ! -d $(RELDIR);	\
+	then				\
+	    mkdir $(RELDIR);		\
+	fi
+	$(CP) $< $@
+
+# implicit rules to copy config files 
+$(TARGETDIR)/%.xml	:	%.xml
+	@if test ! -d $(TARGETDIR);	\
+	then				\
+	    mkdir $(TARGETDIR);		\
+	fi
+	$(CP) $< $@
+
+$(RELDIR)/%.xml	:	%.xml
+	@if test ! -d $(RELDIR);	\
+	then				\
+	    mkdir $(RELDIR);		\
+	fi
+	$(CP) $< $@

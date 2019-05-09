@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<Navigation>
+    <Speed>
+	<Descr>The initial speed of the chassis (m/s)</Descr>
+	<Value>1</Value>
+    </Speed>
+</Navigation>
